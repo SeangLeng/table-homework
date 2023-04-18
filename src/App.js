@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
-
+import CardRender from './Components/CardRender';
+import {useState} from "react";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const [products, setProducts]  = useState([]);
+  let link = 'https://api.escuelajs.co/api/v1/products';
+  fetch(link).then(res => {
+      return res.json();
+  }).then(data => setProducts(data))
+  
+  return(
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">id</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <CardRender link={products}/>
+    </table>
+  )
 }
 
 export default App;
